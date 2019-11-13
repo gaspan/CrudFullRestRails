@@ -1,24 +1,40 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Technology
+- ruby 2.6.5p114 (2019-10-01 revision 67812) [x86_64-linux]
+- Mysql
+- Postman 
 
-Things you may want to cover:
+## SETTING YOUR OWN DATABASE
+set it in folder config > databse.yml
 
-* Ruby version
+## INSTALL DEPENDENCIES
+```bash
+$ bundle install
+```
 
-* System dependencies
+## CREATE DATABASE
+```bash
+$ rake db:create
+```
 
-* Configuration
+## RUN MIGRATION
+```bash
+$ rake db:migrate
+```
 
-* Database creation
+## MAKE DUMMY DATA
+```bash
+$ rake db:seed
+```
+## RUN SERVER
+```bash
+$ rails s
+```
 
-* Database initialization
+## Testing use Postman
 
-* How to run the test suite
+import to your own Postman, import from link
+[a link](https://www.getpostman.com/collections/21855a6c72c4900b43ab)
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```
