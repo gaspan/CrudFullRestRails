@@ -32,10 +32,10 @@ class ProductController < ApplicationController
             
         end
     end
-    
 
     def show_all
-        @product = Product.all
+        # @product = Product.all
+        @product = Product.find_by_sql('SELECT * FROM products where enable =true')
         
         render json:{
             values: @product,
@@ -57,13 +57,76 @@ class ProductController < ApplicationController
             }, status:400
         end
     end
-    
-    
 
     def destroy_product
-        @product = Product.find(params[:id])
+        @product = Product.find(params[:id])        
+        if @product.update({enable:0})
+            render json:{
+                values:{},
+                message:"success!",
+            },status:200
+        end
+    end
+
+    def create_category
+        @category = Category.new(category_params)
+        if @category.save
+            render json:{
+                values:@category,
+                message:"success!"
+            },status:200
+        else
+            render json:{
+                values:{},
+                message:"Failed!"
+            },status:200
+        end
+    end
+
+    def update_category
+        @category = Category.find(params[:id])
+        if @category.update(category_params)
+            render json:{
+                values:{},
+                message:"success!"
+            },status:200
+        else
+            render json:{
+                values:{},
+                message:"Failed!"
+            },status:400
+            
+        end
+    end
+
+    def show_all_category
+
+        @category = Category.find_by_sql('SELECT * FROM categories where enable =true')
         
-        if @product.destroy
+        render json:{
+            values: @category,
+            message: "success!"
+        },status:200
+    end
+
+    def show_by_id_category
+        @category = Category.find(params[:id])
+        if @category.present?
+            render json:{
+                values:@category,
+                message: 'Success!'
+            }, status:200
+        else
+            render json:{
+                values:"",
+                message:"we can't found any data!"
+            }, status:400
+        end
+    end
+
+    def destroy_category
+        @category = Category.find(params[:id])        
+        if @category.update({enable:0})
             render json:{
                 values:{},
                 message:"success!",
@@ -78,7 +141,7 @@ class ProductController < ApplicationController
     end
 
     def category_params
-        params.require(:category).permit(:name_category,:enable)        
+        params.permit(:name,:enable)        
     end
     
 

@@ -5,4 +5,12 @@ Rails.application.routes.draw do
   get 'products/:id' => 'product#show_by_id'
   put 'products/:id' => 'product#update_product'
   delete 'products/:id' => 'product#destroy_product'
+
+  post 'categories' => 'product#create_category'
+  put 'categories/:id' => 'product#update_category'
+  get 'categories' => 'product#show_all_category'
+  get 'categories/:id' => 'product#show_by_id_category'
+  delete 'categories/:id' => 'product#destroy_category'
+
+
 end
