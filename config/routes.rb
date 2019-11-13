@@ -14,5 +14,9 @@ Rails.application.routes.draw do
 
   post 'products_by_category' => 'product#show_product_by_category'
 
+  post 'image' => 'product#upload_image'
+  get 'images' => 'product#show_all_images'
+  delete 'image/:id' => 'product#destroy_image'
+
 
 end

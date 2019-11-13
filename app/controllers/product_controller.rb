@@ -190,8 +190,46 @@ class ProductController < ApplicationController
         end
         
     end
-    
-    
+
+    def upload_image
+        @image = Image.new
+        @image.file = params[:file]
+        @image.name = @image.file.identifier
+        @image.enable = 1
+
+        if @image.save
+            render json:{
+                values:@image,
+                message:"success!"
+            },status:200 
+
+        else
+            render json:{
+                values:{},
+                message:"Failed!"
+            },status:200 
+        end
+    end
+
+    def show_all_images
+
+        @images = Image.find_by_sql('SELECT * FROM images where enable =true')
+        
+        render json:{
+            values: @images,
+            message: "success!"
+        },status:200
+    end
+
+    def destroy_image
+        @image = Image.find(params[:id])        
+        if @image.update({enable:0})
+            render json:{
+                values:{},
+                message:"success!",
+            },status:200
+        end
+    end   
 
     private
     def product_params
@@ -200,14 +238,8 @@ class ProductController < ApplicationController
 
     def category_params
         params.permit(:name,:enable)        
-    end
-
-    def category_product_params
-        params.permit(:category_id)        
-    end
+    end      
     
-    
-
     def notFound
         render json:{
             values:{},
